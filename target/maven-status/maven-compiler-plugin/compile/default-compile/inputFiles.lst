@@ -1,0 +1,9 @@
+D:\taskmanagement\src\main\java\com\mayank\taskmanagement\controller\AuthController.java
+D:\taskmanagement\src\main\java\com\mayank\taskmanagement\controller\TestController.java
+D:\taskmanagement\src\main\java\com\mayank\taskmanagement\dto\AuthResponse.java
+D:\taskmanagement\src\main\java\com\mayank\taskmanagement\dto\LoginRequest.java
+D:\taskmanagement\src\main\java\com\mayank\taskmanagement\dto\RegisterRequest.java
+D:\taskmanagement\src\main\java\com\mayank\taskmanagement\entity\User.java
+D:\taskmanagement\src\main\java\com\mayank\taskmanagement\repository\UserRepository.java
+D:\taskmanagement\src\main\java\com\mayank\taskmanagement\service\UserService.java
+D:\taskmanagement\src\main\java\com\mayank\taskmanagement\TaskManagementApiApplication.java

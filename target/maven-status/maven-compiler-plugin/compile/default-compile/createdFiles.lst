@@ -1,0 +1,9 @@
+com\mayank\taskmanagement\dto\LoginRequest.class
+com\mayank\taskmanagement\controller\AuthController.class
+com\mayank\taskmanagement\repository\UserRepository.class
+com\mayank\taskmanagement\service\UserService.class
+com\mayank\taskmanagement\TaskManagementApiApplication.class
+com\mayank\taskmanagement\dto\RegisterRequest.class
+com\mayank\taskmanagement\entity\User.class
+com\mayank\taskmanagement\dto\AuthResponse.class
+com\mayank\taskmanagement\controller\TestController.class
