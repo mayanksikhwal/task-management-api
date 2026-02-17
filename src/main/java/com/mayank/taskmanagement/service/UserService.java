@@ -5,6 +5,7 @@ import com.mayank.taskmanagement.dto.LoginRequest;
 import com.mayank.taskmanagement.dto.RegisterRequest;
 import com.mayank.taskmanagement.entity.User;
 import com.mayank.taskmanagement.repository.UserRepository;
+import com.mayank.taskmanagement.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,9 +17,16 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private JwtUtil jwtUtil;
+
     public AuthResponse register(RegisterRequest request) {
         if (userRepository.findByUsername(request.getUsername()).isPresent()) {
             throw new RuntimeException("Username already exists");
+        }
+
+        if (userRepository.findByEmail(request.getEmail()).isPresent()) {
+            throw new RuntimeException("Email already exists");
         }
 
         User user = new User();
@@ -28,7 +36,10 @@ public class UserService {
 
         User savedUser = userRepository.save(user);
 
+        String token = jwtUtil.generateToken(savedUser.getUsername(), savedUser.getId());
+
         return new AuthResponse(
+                token,
                 savedUser.getId(),
                 savedUser.getUsername(),
                 savedUser.getEmail(),
@@ -44,7 +55,10 @@ public class UserService {
             throw new RuntimeException("Invalid password");
         }
 
+        String token = jwtUtil.generateToken(user.getUsername(), user.getId());
+
         return new AuthResponse(
+                token,
                 user.getId(),
                 user.getUsername(),
                 user.getEmail(),

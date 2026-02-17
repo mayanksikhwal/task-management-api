@@ -1,3 +1,4 @@
+D:\taskmanagement\src\main\java\com\mayank\taskmanagement\config\SecurityConfig.java
 D:\taskmanagement\src\main\java\com\mayank\taskmanagement\controller\AuthController.java
 D:\taskmanagement\src\main\java\com\mayank\taskmanagement\controller\TaskController.java
 D:\taskmanagement\src\main\java\com\mayank\taskmanagement\controller\TestController.java
@@ -10,8 +11,10 @@ D:\taskmanagement\src\main\java\com\mayank\taskmanagement\entity\Task.java
 D:\taskmanagement\src\main\java\com\mayank\taskmanagement\entity\User.java
 D:\taskmanagement\src\main\java\com\mayank\taskmanagement\enums\TaskPriority.java
 D:\taskmanagement\src\main\java\com\mayank\taskmanagement\enums\TaskStatus.java
+D:\taskmanagement\src\main\java\com\mayank\taskmanagement\filter\JwtAuthenticationFilter.java
 D:\taskmanagement\src\main\java\com\mayank\taskmanagement\repository\TaskRepository.java
 D:\taskmanagement\src\main\java\com\mayank\taskmanagement\repository\UserRepository.java
 D:\taskmanagement\src\main\java\com\mayank\taskmanagement\service\TaskService.java
 D:\taskmanagement\src\main\java\com\mayank\taskmanagement\service\UserService.java
 D:\taskmanagement\src\main\java\com\mayank\taskmanagement\TaskManagementApiApplication.java
+D:\taskmanagement\src\main\java\com\mayank\taskmanagement\util\JwtUtil.java
