@@ -1,0 +1,11 @@
+# Don't copy these into Docker container
+# target/
+.git/
+.idea/
+*.iml
+.DS_Store
+.env
+*.log
+.mvn/
+mvnw
+mvnw.cmd
