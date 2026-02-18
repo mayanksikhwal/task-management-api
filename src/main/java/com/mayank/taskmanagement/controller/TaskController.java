@@ -8,13 +8,18 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import jakarta.validation.Valid;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Tag(name = "Tasks", description = "Task management endpoints (requires JWT authentication)")
+@SecurityRequirement(name = "Bearer Authentication")
 @RestController
 @RequestMapping("/api/tasks")
-@CrossOrigin(origins = "*")
 public class TaskController {
 
     @Autowired
@@ -30,9 +35,10 @@ public class TaskController {
     }
 
     // create task
+    @Operation(summary = "Create task", description = "Create a new task for authenticated user")
     @PostMapping
     public ResponseEntity<?> createTask(
-            @RequestBody TaskRequest request,
+            @Valid @RequestBody TaskRequest request,
             HttpServletRequest httpRequest) {
         try {
             Long userId = getUserId(httpRequest);
@@ -44,6 +50,7 @@ public class TaskController {
     }
 
     // get all tasks for users
+    @Operation(summary = "Get all tasks", description = "Retrieve all tasks for authenticated user")
     @GetMapping
     public ResponseEntity<?> getAllTasks(HttpServletRequest httpRequest) {
         try {
@@ -56,6 +63,7 @@ public class TaskController {
     }
 
     // get tasks by status
+    @Operation(summary = "Get tasks by status", description = "Retrieve all tasks with their status")
     @GetMapping("/status/{status}")
     public ResponseEntity<?> getTasksByStatus(
             @PathVariable TaskStatus status,
@@ -70,6 +78,7 @@ public class TaskController {
     }
 
     // get single task by id
+    @Operation(summary = "Get single task by authenticated user id", description = "Retrieve single tasks for authenticated user with authenticated user id")
     @GetMapping("/{id}")
     public ResponseEntity<?> getTaskById(
             @PathVariable Long id,
@@ -84,6 +93,7 @@ public class TaskController {
     }
 
     // update task
+    @Operation(summary = "Update the task", description = "Update task for authenticated user")
     @PutMapping("/{id}")
     public ResponseEntity<?> updateTask(
             @PathVariable Long id,
@@ -99,6 +109,7 @@ public class TaskController {
     }
 
     // update task status only
+    @Operation(summary = "Update status of the task", description = "Update only status of the task for authenticated user")
     @PatchMapping("/{id}/status")
     public ResponseEntity<?> updateTaskStatus(
             @PathVariable Long id,
@@ -114,6 +125,7 @@ public class TaskController {
     }
 
     // delete task
+    @Operation(summary = "Delete a task", description = "Delete a task for authenticated user")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteTask(
             @PathVariable Long id,
@@ -128,6 +140,7 @@ public class TaskController {
     }
 
     // search tasks
+    @Operation(summary = "Search all tasks", description = "Search all tasks for authenticated user")
     @GetMapping("/search")
     public ResponseEntity<?> searchTasks(
             @RequestParam String keyword,
@@ -142,6 +155,7 @@ public class TaskController {
     }
 
     // get task stats
+    @Operation(summary = "Get statistics of all tasks", description = "Retrieve statistics of all tasks for authenticated user")
     @GetMapping("/statistics")
     public ResponseEntity<?> getStatistics(HttpServletRequest httpRequest) {
         try {

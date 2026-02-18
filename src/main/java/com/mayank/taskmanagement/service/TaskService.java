@@ -9,6 +9,7 @@ import com.mayank.taskmanagement.repository.TaskRepository;
 import com.mayank.taskmanagement.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.mayank.taskmanagement.exception.ResourceNotFoundException;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -26,7 +27,7 @@ public class TaskService {
     //create task
     public TaskResponse createTask(TaskRequest request, Long userId) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
         //create new task
         Task task = new Task();
@@ -62,7 +63,7 @@ public class TaskService {
     //get single task by id
     public TaskResponse getTaskById(Long taskId, Long userId) {
         Task task = taskRepository.findByIdAndUserId(taskId, userId)
-                .orElseThrow(() -> new RuntimeException("Task not found or you don't have access"));
+                .orElseThrow(() -> new ResourceNotFoundException("Task not found or you don't have access"));
 
         return convertToResponse(task);
     }
@@ -71,7 +72,7 @@ public class TaskService {
     public TaskResponse updateTask(Long taskId, TaskRequest request, Long userId) {
         //Find task (ensures user owns this task)
         Task task = taskRepository.findByIdAndUserId(taskId, userId)
-                .orElseThrow(() -> new RuntimeException("Task not found or you don't have access"));
+                .orElseThrow(() -> new ResourceNotFoundException("Task not found or you don't have access"));
 
         //update fields
         if (request.getTitle() != null) {
@@ -99,7 +100,7 @@ public class TaskService {
     //update task status only
     public TaskResponse updateTaskStatus(Long taskId, TaskStatus status, Long userId) {
         Task task = taskRepository.findByIdAndUserId(taskId, userId)
-                .orElseThrow(() -> new RuntimeException("Task not found or you don't have access"));
+                .orElseThrow(() -> new ResourceNotFoundException("Task not found or you don't have access"));
 
         task.setStatus(status);
         Task updatedTask = taskRepository.save(task);
@@ -110,7 +111,7 @@ public class TaskService {
     //delete task
     public void deleteTask(Long taskId, Long userId) {
         Task task = taskRepository.findByIdAndUserId(taskId, userId)
-                .orElseThrow(() -> new RuntimeException("Task not found or you don't have access"));
+                .orElseThrow(() -> new ResourceNotFoundException("Task not found or you don't have access"));
 
         taskRepository.delete(task);
     }

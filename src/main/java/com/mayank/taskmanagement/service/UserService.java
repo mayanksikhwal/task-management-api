@@ -7,7 +7,11 @@ import com.mayank.taskmanagement.entity.User;
 import com.mayank.taskmanagement.repository.UserRepository;
 import com.mayank.taskmanagement.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import com.mayank.taskmanagement.exception.BadRequestException;
+import com.mayank.taskmanagement.exception.ResourceNotFoundException;
+import com.mayank.taskmanagement.exception.UnauthorizedException;
 
 import java.util.Optional;
 
@@ -20,19 +24,22 @@ public class UserService {
     @Autowired
     private JwtUtil jwtUtil;
 
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+
     public AuthResponse register(RegisterRequest request) {
         if (userRepository.findByUsername(request.getUsername()).isPresent()) {
-            throw new RuntimeException("Username already exists");
+            throw new BadRequestException("Username already exists");
         }
 
         if (userRepository.findByEmail(request.getEmail()).isPresent()) {
-            throw new RuntimeException("Email already exists");
+            throw new BadRequestException("Email already exists");
         }
 
         User user = new User();
         user.setUsername(request.getUsername());
         user.setEmail(request.getEmail());
-        user.setPassword(request.getPassword());
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
 
         User savedUser = userRepository.save(user);
 
@@ -49,10 +56,10 @@ public class UserService {
 
     public AuthResponse login(LoginRequest request) {
         User user = userRepository.findByUsername(request.getUsername())
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
-        if (!user.getPassword().equals(request.getPassword())) {
-            throw new RuntimeException("Invalid password");
+        if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
+            throw new UnauthorizedException("Invalid password");
         }
 
         String token = jwtUtil.generateToken(user.getUsername(), user.getId());
