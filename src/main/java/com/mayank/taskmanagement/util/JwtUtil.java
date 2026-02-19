@@ -20,7 +20,7 @@ public class JwtUtil {
     private static final String SECRET_KEY = "mySecretKeyForJWTTokenGenerationAndValidation12345678901234567890";
 
     // token validity: 24 hours (in millisecs)
-    private static final long JWT_TOKEN_VALIDITY = 24 * 60 * 60 * 1000;
+    private static final long JWT_TOKEN_VALIDITY = 15 * 60 * 1000;
 
     // generate signing key
     private Key getSigningKey() {
